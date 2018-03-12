@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 /// Created by Marcin Szałek
+/// horizontal implementation by Andrea Zanini
 
 ///NumberPicker is a widget designed to pick a number between #minValue and #maxValue
 class NumberPicker extends StatelessWidget {
@@ -13,6 +14,7 @@ class NumberPicker extends StatelessWidget {
 
   ///width of list view
   static const double DEFUALT_LISTVIEW_WIDTH = 100.0;
+
 
   ///constructor for integer number picker
   NumberPicker.integer({
@@ -23,6 +25,7 @@ class NumberPicker extends StatelessWidget {
     @required this.onChanged,
     this.itemExtent = DEFAULT_ITEM_EXTENT,
     this.listViewWidth = DEFUALT_LISTVIEW_WIDTH,
+    this.horizontal = false,
   })
       : assert(initialValue != null),
         assert(minValue != null),
@@ -49,6 +52,7 @@ class NumberPicker extends StatelessWidget {
     this.decimalPlaces = 1,
     this.itemExtent = DEFAULT_ITEM_EXTENT,
     this.listViewWidth = DEFUALT_LISTVIEW_WIDTH,
+    this.horizontal = false,
   })
       : assert(initialValue != null),
         assert(minValue != null),
@@ -106,6 +110,9 @@ class NumberPicker extends StatelessWidget {
   ///Currently selected decimal value
   final int selectedDecimalValue;
 
+  //horizontal view?
+  final bool horizontal;
+
   //
   //----------------------------- PUBLIC ------------------------------
   //
@@ -137,6 +144,14 @@ class NumberPicker extends StatelessWidget {
 
     if (decimalPlaces == 0) {
       return _integerListView(themeData);
+    } else if (horizontal) {
+      return new Column(
+        children: <Widget>[
+          _integerListView(themeData),
+          _decimalListView(themeData),
+        ],
+        mainAxisAlignment: MainAxisAlignment.center,
+      );
     } else {
       return new Row(
         children: <Widget>[
@@ -160,6 +175,7 @@ class NumberPicker extends StatelessWidget {
         height: _listViewHeight,
         width: listViewWidth,
         child: new ListView.builder(
+          scrollDirection: (horizontal) ? Axis.horizontal : Axis.vertical,
           controller: intScrollController,
           itemExtent: itemExtent,
           itemCount: itemCount,
@@ -175,14 +191,15 @@ class NumberPicker extends StatelessWidget {
             return isExtra
                 ? new Container() //empty first and last element
                 : new Center(
-                    child: new Text(value.toString(), style: itemStyle),
-                  );
+              child: new Text(value.toString(), style: itemStyle),
+            );
           },
         ),
       ),
       onNotification: _onIntegerNotification,
     );
   }
+
 
   Widget _decimalListView(ThemeData themeData) {
     TextStyle defaultStyle = themeData.textTheme.body1;
@@ -197,6 +214,7 @@ class NumberPicker extends StatelessWidget {
         height: _listViewHeight,
         width: listViewWidth,
         child: new ListView.builder(
+          scrollDirection: (horizontal) ? Axis.horizontal : Axis.vertical,
           controller: decimalScrollController,
           itemExtent: itemExtent,
           itemCount: itemCount,
@@ -212,10 +230,10 @@ class NumberPicker extends StatelessWidget {
             return isExtra
                 ? new Container() //empty first and last element
                 : new Center(
-                    child: new Text(
-                        value.toString().padLeft(decimalPlaces, '0'),
-                        style: itemStyle),
-                  );
+              child: new Text(
+                  value.toString().padLeft(decimalPlaces, '0'),
+                  style: itemStyle),
+            );
           },
         ),
       ),
