@@ -248,7 +248,8 @@ class NumberPicker extends StatelessWidget {
   bool _onIntegerNotification(Notification notification) {
     if (notification is ScrollNotification) {
       //calculate
-      int intIndexOfMiddleElement =
+      int intIndexOfMiddleElement = (horizontal) ? (notification.metrics
+          .pixels + listViewWidth / 2) ~/ itemExtent :
           (notification.metrics.pixels + listViewHeight / 2) ~/ itemExtent;
       int intValueInTheMiddle = minValue + intIndexOfMiddleElement - 1;
 
@@ -283,7 +284,8 @@ class NumberPicker extends StatelessWidget {
   bool _onDecimalNotification(Notification notification) {
     if (notification is ScrollNotification) {
       //calculate middle value
-      int indexOfMiddleElement =
+      int indexOfMiddleElement = (horizontal) ? (notification.metrics.pixels +
+          listViewWidth / 2) ~/ itemExtent :
           (notification.metrics.pixels + listViewHeight / 2) ~/ itemExtent;
       int decimalValueInTheMiddle = indexOfMiddleElement - 1;
 
