@@ -13,8 +13,7 @@ class NumberPicker extends StatelessWidget {
   static const double DEFAULT_ITEM_EXTENT = 50.0;
 
   ///width of list view
-  static const double DEFUALT_LISTVIEW_WIDTH = 100.0;
-
+  static const double DEFAULT_LISTVIEW_WIDTH = 100.0;
 
   ///constructor for integer number picker
   NumberPicker.integer({
@@ -24,8 +23,9 @@ class NumberPicker extends StatelessWidget {
     @required this.maxValue,
     @required this.onChanged,
     this.itemExtent = DEFAULT_ITEM_EXTENT,
-    this.listViewWidth = DEFUALT_LISTVIEW_WIDTH,
+    this.listViewWidth = DEFAULT_LISTVIEW_WIDTH,
     this.horizontal = false,
+    this.listViewHeight = DEFAULT_ITEM_EXTENT * 3,
   })
       : assert(initialValue != null),
         assert(minValue != null),
@@ -39,7 +39,6 @@ class NumberPicker extends StatelessWidget {
           initialScrollOffset: (initialValue - minValue) * itemExtent,
         ),
         decimalScrollController = null,
-        _listViewHeight = 3 * itemExtent,
         super(key: key);
 
   ///constructor for decimal number picker
@@ -51,8 +50,10 @@ class NumberPicker extends StatelessWidget {
     @required this.onChanged,
     this.decimalPlaces = 1,
     this.itemExtent = DEFAULT_ITEM_EXTENT,
-    this.listViewWidth = DEFUALT_LISTVIEW_WIDTH,
+    this.listViewWidth = DEFAULT_LISTVIEW_WIDTH,
     this.horizontal = false,
+    this.listViewHeight = DEFAULT_ITEM_EXTENT * 3,
+
   })
       : assert(initialValue != null),
         assert(minValue != null),
@@ -73,7 +74,6 @@ class NumberPicker extends StatelessWidget {
               .roundToDouble() *
               itemExtent,
         ),
-        _listViewHeight = 3 * itemExtent,
         super(key: key);
 
   ///called when selected value changes
@@ -93,7 +93,7 @@ class NumberPicker extends StatelessWidget {
   final double itemExtent;
 
   ///view will always contain only 3 elements of list in pixels
-  final double _listViewHeight;
+  final double listViewHeight;
 
   ///width of list view in pixels
   final double listViewWidth;
@@ -172,7 +172,7 @@ class NumberPicker extends StatelessWidget {
 
     return new NotificationListener(
       child: new Container(
-        height: _listViewHeight,
+        height: listViewHeight,
         width: listViewWidth,
         child: new ListView.builder(
           scrollDirection: (horizontal) ? Axis.horizontal : Axis.vertical,
@@ -211,7 +211,7 @@ class NumberPicker extends StatelessWidget {
 
     return new NotificationListener(
       child: new Container(
-        height: _listViewHeight,
+        height: listViewHeight,
         width: listViewWidth,
         child: new ListView.builder(
           scrollDirection: (horizontal) ? Axis.horizontal : Axis.vertical,
@@ -249,7 +249,7 @@ class NumberPicker extends StatelessWidget {
     if (notification is ScrollNotification) {
       //calculate
       int intIndexOfMiddleElement =
-          (notification.metrics.pixels + _listViewHeight / 2) ~/ itemExtent;
+          (notification.metrics.pixels + listViewHeight / 2) ~/ itemExtent;
       int intValueInTheMiddle = minValue + intIndexOfMiddleElement - 1;
 
       if (_userStoppedScrolling(notification, intScrollController)) {
@@ -284,7 +284,7 @@ class NumberPicker extends StatelessWidget {
     if (notification is ScrollNotification) {
       //calculate middle value
       int indexOfMiddleElement =
-          (notification.metrics.pixels + _listViewHeight / 2) ~/ itemExtent;
+          (notification.metrics.pixels + listViewHeight / 2) ~/ itemExtent;
       int decimalValueInTheMiddle = indexOfMiddleElement - 1;
 
       if (_userStoppedScrolling(notification, decimalScrollController)) {

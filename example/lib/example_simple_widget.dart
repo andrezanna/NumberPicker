@@ -41,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 initialValue: _currentValue,
                 minValue: 0,
                 maxValue: 100,
+                horizontal: true,
                 onChanged: (newValue) =>
                     setState(() => _currentValue = newValue)),
             new Text("Current number: $_currentValue"),

@@ -64,12 +64,14 @@ class _MyHomePageState extends State<MyHomePage> {
       minValue: 0,
       maxValue: 100,
       onChanged: _handleValueChanged,
+      horizontal: true,
     );
     decimalNumberPicker = new NumberPicker.decimal(
         initialValue: _currentDoubleValue,
         minValue: 1,
         maxValue: 5,
         decimalPlaces: 2,
+        horizontal: true,
         onChanged: _handleValueChanged);
     return new Scaffold(
         appBar: new AppBar(
@@ -116,4 +118,5 @@ class _MyHomePageState extends State<MyHomePage> {
     )
         .then(_handleValueChangedExternally);
   }
+
 }
