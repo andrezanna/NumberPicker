@@ -401,6 +401,7 @@ class NumberPickerState extends State<NumberPicker> {
   ///indicates if user has stopped scrolling so we can center value in the middle
   bool _userStoppedScrolling(Notification notification,
       ScrollController scrollController) {
+    setState(() {});
     return notification is UserScrollNotification &&
         notification.direction == ScrollDirection.idle &&
         scrollController.position.activity is! HoldScrollActivity;
