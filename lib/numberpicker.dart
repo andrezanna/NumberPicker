@@ -368,6 +368,7 @@ class NumberPickerState extends State<NumberPicker> {
           }
         }
         onChanged(newValue);
+        setState(() {});
       }
     }
     return true;
