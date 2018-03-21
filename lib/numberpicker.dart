@@ -367,9 +367,7 @@ class NumberPickerState extends State<NumberPicker> {
             newValue = ((intValueInTheMiddle + decimalPart).toDouble());
           }
         }
-        setState(() {
-          onChanged(newValue);
-        });
+        onChanged(newValue);
       }
     }
     return true;
