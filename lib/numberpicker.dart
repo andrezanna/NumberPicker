@@ -121,6 +121,11 @@ class NumberPicker extends StatelessWidget {
     _animate(intScrollController, (valueToSelect - minValue) * itemExtent);
   }
 
+  animateIntfor(int valueToSelect, int duration) {
+    _animate(intScrollController, (valueToSelect - minValue) * itemExtent,
+        duration = duration);
+  }
+
   animateDecimal(int decimalValue) {
     _animate(decimalScrollController, decimalValue * itemExtent);
   }
@@ -322,9 +327,11 @@ class NumberPicker extends StatelessWidget {
   }
 
   ///scroll to selected value
-  _animate(ScrollController scrollController, double value) {
+  _animate(ScrollController scrollController, double value,
+      [int duration = 1]) {
     scrollController.animateTo(value,
-        duration: new Duration(seconds: 1), curve: new ElasticOutCurve());
+        duration: new Duration(seconds: duration),
+        curve: new ElasticOutCurve());
   }
 }
 
