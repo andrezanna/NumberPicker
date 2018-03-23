@@ -123,7 +123,7 @@ class NumberPicker extends StatelessWidget {
 
   animateIntfor(int valueToSelect, int duration) {
     _animate(intScrollController, (valueToSelect - minValue) * itemExtent,
-        duration = duration);
+        duration);
   }
 
   animateDecimal(int decimalValue) {
